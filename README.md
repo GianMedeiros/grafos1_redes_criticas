@@ -15,34 +15,70 @@ Temas:
 # Grafos1_redes_criticas
 
 **Número da Lista**: X<br>
-**Conteúdo da Disciplina**: Grafos 1<br>
+**Conteúdo da Disciplina**: Grafos 1
 
 ## Alunos
+
 |Matrícula | Aluno |
 | -- | -- |
 | 19/0055006  |  Gian Medeiros Rosa |
 | 20/0073249  |  Pedro Vitor Augusto de Jesus |
 
-## Sobre 
+## Sobre
+
 <!-- Descreva os objetivos do seu projeto e como ele funciona.  -->
 O objetivo do projeto é identificar áreas críticas em um sistema de rede de computadores. O sistema vai representar uma rede de computadores, com os computadores sendo seus nós e o cabeamento sendo as arestas que vão conectar conectar dois computadores.
 
-<p>Após a representação do sistema em um grafo, será utilizado uma série de algoritmos para analisar a importância que cada nó e aresta tem para com a integridade do sistema como um todo.
+Após a representação do sistema em um grafo, será utilizado uma série de algoritmos para analisar a importância que cada nó e aresta tem para com a integridade do sistema como um todo.
 
-<p>Explicar a definição e analise das áreas críticas...
+Descrição de um ponto crítico para SRC (Sistema de Rede de Computadores):
+
+### **Arestas críticas:**
+
+**1. Grafos Desconectados:**
+
+- A falta de alguma aresta rompe a conecção única do SRC;
+- Fragmentação da SRC em sub-sistemas menores e perdendo integridade.
+
+**2. Grafos Fracamente Conectados:**
+
+- Compõem um unico conjunto conectado, porém não possui ida e volta completa de todos os dispositivos da rede.
+
+**3. Grafos Topológicos:**
+
+- Grafo não contem ciclos, sendo assim, a ordem de comunicação é unidirecional.
+
+### **Nós críticos:**
+
+**1. Grafos Desconectados:**
+
+- A falta de algum nó rompe a conecção única do SRC;
+- Fragmentação da SRC em sub-sistemas menores e perdendo integridade.
+
+<!-- **2. Sobrecarga??:**
+
+- Um unico nó conecta uma rede.
+
+**3. ???:**
+
+- Grafo não contem ciclos, sendo assim, a ordem de comunicação é unidirecional. -->
 
 ## Screenshots
+
 Adicione 3 ou mais screenshots do projeto em funcionamento.
 
 ## Instalação 
+
 **Linguagem**: Python<br>
 **Framework**: (caso exista)<br>
 Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 
-## Uso 
+## Uso
+
 Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
 
-## Outros 
+## Outros
+
 Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
 
 
