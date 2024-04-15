@@ -1,5 +1,5 @@
-from node import Node
-from colors import WHITE
+from front.src.node import Node
+from front.src.colors import WHITE
 import pygame
 
 class Edge:

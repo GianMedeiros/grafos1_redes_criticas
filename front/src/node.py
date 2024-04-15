@@ -1,5 +1,5 @@
 import pygame
-from colors import *
+from front.src.colors import *
 
 
 class Node:
@@ -8,11 +8,11 @@ class Node:
         self.id = id
         self.pos = pos
 
-    def critical_node(self):
-        self.color = RED
-    
-    def non_critical_node(self):
-        self.color = BLUE
+    def toggle_color(self):
+        if self.color == BLUE:
+            self.color = RED
+        else:
+            self.color = BLUE
 
     def draw(self, screen):
         pygame.draw.circle(screen, WHITE, self.pos, 13)

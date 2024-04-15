@@ -1,8 +1,8 @@
 import pygame
 import sys
-from colors import *
-from node import Node
-from edge import Edge
+from front.src.colors import *
+from front.src.node import Node
+from front.src.edge import Edge
 
 pygame.init()
 
@@ -26,18 +26,14 @@ def draw_graph():
     screen.fill(BLACK) 
     for edge in edges:
         edge.draw(screen)
-    
+
     for node in nodes:
         node.draw(screen)
 
 
-def toggle_node_color():
-
-    global node_color
-    if node_color == RED:
-        node_color = BLUE
-    else:
-        node_color = RED
+def critical_node(id: int):
+    global nodes
+    nodes[id].toggle_color()
 
 
 def find_clicked_node(pos):
@@ -49,52 +45,60 @@ def find_clicked_node(pos):
 
 
 # Main loop
-running = True
-clock = pygame.time.Clock()
-dragging = False
-selected_node = None
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1:
+class Interface:
+    def __init__(self) -> None:
+        self.running = True
+        self.clock = pygame.time.Clock()
+        self.dragging = False
+        self.selected_node = None
+    
+    def run(self):
+        global connecting
+        while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        pos = pygame.mouse.get_pos()
+                        self.selected_node = find_clicked_node(pos)
+                        if self.selected_node is None:
+                            new_node = Node(len(nodes), pos)
+                            nodes.append(new_node)
+                        else:
+                            self.dragging = True
+                    elif event.button == 3:
+                        if connecting:
+                            pos = pygame.mouse.get_pos()
+                            end_node = find_clicked_node(pos)
+                            if end_node is not None and end_node != start_node:
+                                edge = Edge(start_node, end_node)
+                                edges.append(edge)
+                            connecting = False
+                        else:
+                            pos = pygame.mouse.get_pos()
+                            start_node = find_clicked_node(pos)
+                            if start_node is not None:
+                                connecting = True
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    if event.button == 1:
+                        self.dragging = False
+                        self.selected_node = None
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        critical_node(0)
+
+            if self.dragging and self.selected_node is not None:
                 pos = pygame.mouse.get_pos()
-                selected_node = find_clicked_node(pos)
-                if selected_node is None:
-                    new_node = Node(len(nodes), pos)  # Cria um novo objeto Node
-                    nodes.append(new_node)  # Adiciona o novo objeto Node à lista
-                else:
-                    dragging = True
-            elif event.button == 3:
-                if connecting:
-                    pos = pygame.mouse.get_pos()
-                    end_node = find_clicked_node(pos)
-                    if end_node is not None and end_node != start_node:
-                        edge = Edge(start_node, end_node)
-                        edges.append(edge)
-                    connecting = False
-                else:
-                    pos = pygame.mouse.get_pos()
-                    start_node = find_clicked_node(pos)
-                    if start_node is not None:
-                        connecting = True
-        elif event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                dragging = False
-                selected_node = None
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                toggle_node_color()
+                self.selected_node.pos = pos
 
-    if dragging and selected_node is not None:
-        pos = pygame.mouse.get_pos()
-        selected_node.pos = pos
+            draw_graph()
 
-    draw_graph()
+            pygame.display.flip()
+            self.clock.tick(30)
 
-    pygame.display.flip()
-    clock.tick(30)
+        pygame.quit()
+        sys.exit()
 
-pygame.quit()
-sys.exit()
+if __name__ == "__main__":
+    Interface().run()
