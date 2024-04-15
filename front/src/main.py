@@ -1,12 +1,10 @@
 import pygame
 import sys
+from colors import *
+from node import Node
+from edge import Edge
 
 pygame.init()
-
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
 
 WIDTH, HEIGHT = 800, 600
 
@@ -26,17 +24,14 @@ node_color = BLUE
 
 def draw_graph():
     screen.fill(BLACK) 
-    
     for edge in edges:
-        pygame.draw.line(screen, WHITE, nodes[edge[0]], nodes[edge[1]], 2)
+        edge.draw(screen)
     
     for node in nodes:
-        pygame.draw.circle(screen, WHITE, node, 13)
-        pygame.draw.circle(screen, node_color, node, 11)
+        node.draw(screen)
 
 
-def toggle_node_color(pos):
-    node = find_clicked_node(pos)
+def toggle_node_color():
 
     global node_color
     if node_color == RED:
@@ -46,10 +41,10 @@ def toggle_node_color(pos):
 
 
 def find_clicked_node(pos):
-    for i, node in enumerate(nodes):
-        dist = ((pos[0] - node[0])**2 + (pos[1] - node[1])**2)**0.5
+    for node in nodes:
+        dist = ((pos[0] - node.pos[0])**2 + (pos[1] - node.pos[1])**2)**0.5
         if dist < 10:
-            return i
+            return node
     return None
 
 
@@ -67,7 +62,8 @@ while running:
                 pos = pygame.mouse.get_pos()
                 selected_node = find_clicked_node(pos)
                 if selected_node is None:
-                    nodes.append(pos)
+                    new_node = Node(len(nodes), pos)  # Cria um novo objeto Node
+                    nodes.append(new_node)  # Adiciona o novo objeto Node à lista
                 else:
                     dragging = True
             elif event.button == 3:
@@ -75,7 +71,8 @@ while running:
                     pos = pygame.mouse.get_pos()
                     end_node = find_clicked_node(pos)
                     if end_node is not None and end_node != start_node:
-                        edges.append((start_node, end_node))
+                        edge = Edge(start_node, end_node)
+                        edges.append(edge)
                     connecting = False
                 else:
                     pos = pygame.mouse.get_pos()
@@ -92,7 +89,7 @@ while running:
 
     if dragging and selected_node is not None:
         pos = pygame.mouse.get_pos()
-        nodes[selected_node] = pos
+        selected_node.pos = pos
 
     draw_graph()
 
