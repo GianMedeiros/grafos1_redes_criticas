@@ -3,6 +3,7 @@ import sys
 from front.src.colors import *
 from front.src.node import Node
 from front.src.edge import Edge
+from back.src.main import Graph
 
 pygame.init()
 
@@ -15,6 +16,7 @@ pygame.display.set_caption("Redes Críticas")
 # Graph
 nodes = []
 edges = []
+lis_edges = []
 
 connecting = False
 start_node = None
@@ -30,10 +32,10 @@ def draw_graph():
         node.draw(screen)
 
 
-def critical_node(ids: list):
+def critical_node(color, ids):
     global nodes
     for id in ids:
-        nodes[id].toggle_color()
+        nodes[id-1].toggle_color(color)
 
 
 def find_clicked_node(pos):
@@ -63,7 +65,7 @@ class Interface:
                         pos = pygame.mouse.get_pos()
                         self.selected_node = find_clicked_node(pos)
                         if self.selected_node is None:
-                            new_node = Node(len(nodes), pos)
+                            new_node = Node(len(nodes)+1, pos)
                             nodes.append(new_node)
                         else:
                             self.dragging = True
@@ -74,6 +76,7 @@ class Interface:
                             end_node = find_clicked_node(pos)
                             if end_node is not None and end_node != start_node:
                                 edge = Edge(start_node, end_node)
+                                lis_edges.append([nodes.index(start_node)+1, nodes.index(end_node)+1])
                                 edges.append(edge)
                             connecting = False
                         else:
@@ -87,8 +90,9 @@ class Interface:
                         self.selected_node = None
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        critical_node([0, 1])
-
+                        grph = Graph(nodes, lis_edges)
+                        color, criticos = grph.run()
+                        critical_node(color, criticos)
             if self.dragging and self.selected_node is not None:
                 pos = pygame.mouse.get_pos()
                 self.selected_node.pos = pos

@@ -1,3 +1,4 @@
+from typing import Any
 from front.src.colors import WHITE
 import pygame
 import math
