@@ -8,11 +8,11 @@ class Node:
         self.id = id
         self.pos = pos
 
-    def toggle_color(self):
-        if self.color == BLUE:
-            self.color = RED
-        else:
+    def toggle_color(self, color):
+        if self.color == color:
             self.color = BLUE
+        else:
+            self.color = color
 
     def draw(self, screen):
         pygame.draw.circle(screen, WHITE, self.pos, 13)
