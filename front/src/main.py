@@ -26,9 +26,9 @@ def draw_graph():
     screen.fill(BLACK) 
     for edge in edges:
         edge.draw(screen)
-
     for node in nodes:
         node.draw(screen)
+
 
 
 def critical_node(id: int):
@@ -53,7 +53,7 @@ class Interface:
         self.selected_node = None
     
     def run(self):
-        global connecting
+        global connecting, start_node
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -68,6 +68,7 @@ class Interface:
                         else:
                             self.dragging = True
                     elif event.button == 3:
+                        global start_node  # Definindo start_node como global
                         if connecting:
                             pos = pygame.mouse.get_pos()
                             end_node = find_clicked_node(pos)

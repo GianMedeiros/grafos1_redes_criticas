@@ -17,5 +17,3 @@ class Node:
     def draw(self, screen):
         pygame.draw.circle(screen, WHITE, self.pos, 13)
         pygame.draw.circle(screen, self.color, self.pos, 11)
-
-
