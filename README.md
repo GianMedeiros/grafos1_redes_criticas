@@ -21,10 +21,9 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
 
 ## Instalação 
 **Linguagem**: Python<br>
-**Framework**: (caso exista)<br>
+**Framework**: Pygame<br>
 
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
 
 ### Assegure ter o Python instalado em sua máquina
 
