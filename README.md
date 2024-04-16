@@ -34,7 +34,7 @@ Links de apresentação:
 
 - Grafo **É** fortemente conectado e **NÃO GERA** engano de analise:
 
-![nao_conectado](files/images/fracamente_conectado.png)
+![nao_conectado](files/images/fortemente_conectado.png)
 
 ## Instalação 
 **Linguagem**: Python<br>
